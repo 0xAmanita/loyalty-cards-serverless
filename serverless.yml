@@ -1,4 +1,3 @@
-org: yldevier
 service: python-serverless-arch1-yldevier
 
 provider:
