@@ -1,0 +1,6 @@
+node_modules/
+.dynamodb/
+__pycache__/
+.serverless
+.env
+*.pyc

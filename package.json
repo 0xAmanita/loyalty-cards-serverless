@@ -1,0 +1,17 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "serverless-dynamodb": "^0.2.58",
+    "serverless-offline": "^14.7.3"
+  }
+}

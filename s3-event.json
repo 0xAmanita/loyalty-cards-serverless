@@ -1,0 +1,22 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "ap-southeast-1",
+      "eventTime": "2026-06-21T00:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "bucket": {
+          "name": "loyalty-s3bucket-yldevier",
+          "arn": "arn:aws:s3:::loyalty-s3bucket-yldevier"
+        },
+        "object": {
+          "key": "yldevier_loyalty_cards.csv",
+          "size": 126
+        }
+      }
+    }
+  ]
+}
