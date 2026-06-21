@@ -1,25 +1,6 @@
 org: yldevier
 service: python-serverless-arch1-yldevier
 
-plugins:
-  - serverless-dynamodb
-  - serverless-offline
-
-custom:
-  serverless-dynamodb:
-    stages:
-      - dev
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-      seed: false
-      noStart: false
-  serverless-offline:
-    httpPort: 3000
-    lambdaPort: 3002
-    noPrependStageInUrl: true
-
 provider:
   name: aws
   runtime: python3.12
@@ -68,14 +49,15 @@ functions:
     handler: handler.batch_create_loyalty_cards
     events:
       - s3:
-          bucket: !Ref LoyaltyCardsInputBucket
+          bucket: loyalty-s3bucket-yldevier
           event: s3:ObjectCreated:*
+          existing: true
 
   processLoyaltyCardTask:
     handler: handler.sqs_trigger
     events:
       - sqs:
-          arn: !GetAtt LoyaltyCardsQueue.Arn
+          arn: arn:aws:sqs:ap-southeast-1:956304645529:yldevier-loyalty-cards-sqs
 
 resources:
   Resources:
@@ -90,37 +72,3 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-
-    LoyaltyCardsInputBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: loyalty-s3bucket-yldevier
-        PublicAccessBlockConfiguration:
-          BlockPublicAcls: true
-          BlockPublicPolicy: true
-          IgnorePublicAcls: true
-          RestrictPublicBuckets: true
-
-    LoyaltyCardsCsvPipelineBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: yldevier-loyalty-card-csv-pipeline
-        PublicAccessBlockConfiguration:
-          BlockPublicAcls: true
-          BlockPublicPolicy: true
-          IgnorePublicAcls: true
-          RestrictPublicBuckets: true
-
-    LoyaltyCardsQueue:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: yldevier-loyalty-cards-sqs
-        VisibilityTimeout: 60
-        RedrivePolicy:
-          deadLetterTargetArn: !GetAtt LoyaltyCardsDLQ.Arn
-          maxReceiveCount: 3
-
-    LoyaltyCardsDLQ:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: yldevier-loyalty-cards-sqs-dlq
