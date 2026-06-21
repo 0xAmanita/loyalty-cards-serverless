@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+      nodejs: 20
+    commands:
+      - npm install -g serverless
+      - npm install
+      - pip install -r requirements.txt --target . || echo "no requirements.txt, skipping"
+  build:
+    commands:
+      - serverless deploy --stage dev --region ap-southeast-1
