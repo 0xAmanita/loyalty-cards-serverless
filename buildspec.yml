@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    SERVERLESS_ACCESS_KEY: "yldevier-cicd:SERVERLESS_ACCESS_KEY"
+
 phases:
   install:
     runtime-versions:
